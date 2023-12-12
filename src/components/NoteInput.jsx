@@ -49,7 +49,7 @@ function NoteInput({ addNote, onClose }) {
           id="title"
           value={title}
           onChange={handleTitleChange}
-          className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 ${
+          className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:border-gray-500 ${
             titleError ? "border-red-500" : ""
           }`}
           placeholder="Masukkan judul catatan"
@@ -66,7 +66,7 @@ function NoteInput({ addNote, onClose }) {
           id="body"
           value={body}
           onChange={(e) => setBody(e.target.value)}
-          className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+          className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-gray-500"
           placeholder="Masukkan isi catatan"
           rows="4"
         ></textarea>
