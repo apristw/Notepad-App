@@ -15,9 +15,9 @@ function CardActive({ initialData, dateFormat, onDelete, archiveToggle }) {
 
   const filteredActive = initialData.filter((data) => data.archived === false);
   return (
-    <div className="max-w-7xl flex flex-col mx-auto mb-16">
+    <div className="max-w-7xl mx-auto mb-16">
       <h2 className="text-2xl text-gray-500 py-3">Catatan Aktif</h2>
-      <div className="flex mx-auto w-[95%] flex-wrap gap-8 ">
+      <div className="grid grid-cols-3 gap-8 w-full ">
         {filteredActive.map((data, index) => {
           const colorClass = getColorClass(index);
           return (

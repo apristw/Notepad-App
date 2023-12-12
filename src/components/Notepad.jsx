@@ -6,6 +6,8 @@ import NoteInput from "./NoteInput";
 
 function Notepad() {
   const [initialData, setInitialData] = useState(getInitialData());
+  const [isInputNoteVisible, setIsInputNoteVisible] = useState(false);
+
   const dateFormat = showFormattedDate();
 
   const onDeleteHandler = (id) => {
@@ -35,14 +37,45 @@ function Notepad() {
     setInitialData(updatedData);
   };
 
+  const showNoteInput = () => {
+    setIsInputNoteVisible(true);
+    document.body.classList.add("overflow-hidden");
+  };
+
+  const hideNoteInput = () => {
+    setIsInputNoteVisible(false);
+    document.body.classList.remove("overflow-hidden");
+  };
+
   return (
     <div>
-      <div className="max-w-7xl w-full mx-auto py-6 flex items-center justify-between">
-        <h1 className="text-left text-gray-600 text-3xl font-bold ">
-          Note App
-        </h1>
+      <h1 className="text-center mt-7 text-gray-600 text-3xl font-bold ">
+        Note App
+      </h1>
+      <div className="max-w-7xl w-full mx-auto flex justify-between items-center px-19 my-4">
+        <button
+          className="bg-[#22a6b3] hover:bg-[#108690] py-3 px-4 text-white font-semibold"
+          onClick={showNoteInput}
+        >
+          Tambah Catatan
+        </button>
+
+        <form action="">
+          <input
+            type="text"
+            placeholder="Cari Catatan..."
+            className="bg-gray-300 py-3 px-4"
+          />
+        </form>
       </div>
-      <NoteInput addNote={addNote} />
+      {isInputNoteVisible && (
+        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+          <div className="max-w-xl w-full bg-white p-8 rounded-md">
+            <NoteInput addNote={addNote} onClose={hideNoteInput} />
+          </div>
+        </div>
+      )}
+
       <CardActive
         initialData={initialData}
         dateFormat={dateFormat}
