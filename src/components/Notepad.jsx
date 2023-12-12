@@ -1,14 +1,18 @@
-import { getInitialData, showFormattedDate } from "../utils";
+import { getInitialData } from "../utils";
 import CardActive from "./CardActive";
 import { useState } from "react";
 import CardRestore from "./CardRestore";
 import NoteInput from "./NoteInput";
+import SearchNote from "./SearchNote";
 
 function Notepad() {
   const [initialData, setInitialData] = useState(getInitialData());
   const [isInputNoteVisible, setIsInputNoteVisible] = useState(false);
+  const [search, setSearch] = useState("");
 
-  const dateFormat = showFormattedDate();
+  const onSearchNote = (valueInput) => {
+    setSearch(valueInput);
+  };
 
   const onDeleteHandler = (id) => {
     const dataAwal = initialData.filter((dataawal) => dataawal.id !== id);
@@ -47,6 +51,10 @@ function Notepad() {
     document.body.classList.remove("overflow-hidden");
   };
 
+  const filteredNotes = initialData.filter((note) => {
+    return note.title.toLowerCase().includes(search.toLowerCase());
+  });
+
   return (
     <div>
       <h1 className="text-center mt-7 text-gray-600 text-3xl font-bold ">
@@ -60,13 +68,7 @@ function Notepad() {
           Tambah Catatan
         </button>
 
-        <form action="">
-          <input
-            type="text"
-            placeholder="Cari Catatan..."
-            className="bg-gray-300 py-3 px-4"
-          />
-        </form>
+        <SearchNote onSearchNote={onSearchNote} search={search} />
       </div>
       {isInputNoteVisible && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
@@ -75,17 +77,14 @@ function Notepad() {
           </div>
         </div>
       )}
-
       <CardActive
-        initialData={initialData}
-        dateFormat={dateFormat}
+        initialData={filteredNotes}
         onDelete={onDeleteHandler}
         archiveToggle={handleArchiveToggle}
       />
       <hr className="max-w-7xl w-full mx-auto h-1 bg-gray-300" />
       <CardRestore
-        initialData={initialData}
-        dateFormat={dateFormat}
+        initialData={filteredNotes}
         onDelete={onDeleteHandler}
         archiveToggle={handleArchiveToggle}
       />
